@@ -1,7 +1,7 @@
 {
   "name": "SimpleCropper",
   "version": "1.0.0",
-  "main": ["./scripts/jquery.Jcrop.js", "./scripts/jquery.SimpleCropper.js"],
+  "main": ["./scripts/jquery.Jcrop.js", "./scripts/jquery.SimpleCropper.js", "./css/jquery.Jcrop.css", "./css/style.css"],
   "ignore": [],
   "dependencies": {
   }
