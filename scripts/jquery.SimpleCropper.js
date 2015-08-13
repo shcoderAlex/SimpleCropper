@@ -25,6 +25,7 @@
         var original_data = null;
         var jcrop_api;
         var selector = $(this).selector;
+        var item = null;
 
         var modal = "<div id='modal'></div><div id='preview'><div class='buttons'><div class='cancel'></div><div class='ok'></div></div></div>";
         var canvas = "<canvas id='myCanvas' style='display:none;'></canvas>";
@@ -37,6 +38,7 @@
 
 
         $('body').on('click', selector, function (e) {
+            item = $(this);
             var input = $(this).children('input[type=file]');
 
             input.on('click', function (e) {
@@ -233,7 +235,7 @@
                   "crop": {
                     "x": (x1 * kw), "y": (y1 * kh), "width": (sw * kw), "height": (sh * kh) 
                   }
-                }, $(this));
+                }, item);
             }
         }
 
