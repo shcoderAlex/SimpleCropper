@@ -4,10 +4,11 @@
     Homepage   : http://www.dragar.net
 */
 
-#fileInput{
+.simple-file-input{
   width:0;
   height:0;
   overflow:hidden;
+  display: block;
 }
 
 #modal{

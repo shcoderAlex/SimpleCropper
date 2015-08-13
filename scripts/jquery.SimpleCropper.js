@@ -24,42 +24,52 @@
         var ias = null;
         var original_data = null;
         var jcrop_api;
-        var bottom_html = "<input type='file' id='fileInput' name='files[]'/><canvas id='myCanvas' style='display:none;'></canvas><div id='modal'></div><div id='preview'><div class='buttons'><div class='cancel'></div><div class='ok'></div></div></div>";
-        $('body').append(bottom_html);
+        var selector = $(this).selector;
 
-        //add click to element
-        this.click(function () {
+        var modal = "<div id='modal'></div><div id='preview'><div class='buttons'><div class='cancel'></div><div class='ok'></div></div></div>";
+        var canvas = "<canvas id='myCanvas' style='display:none;'></canvas>";
+
+        if(!$('#modal').length && !$('#myCanvas').length){
+            $('body').append(modal);
+            $('body').append(canvas);
+        }
+
+
+
+        $('body').on('click', selector, function (e) {
+            var input = $(this).children('input[type=file]');
+
+            input.on('click', function (e) {
+                e.stopPropagation(); 
+            });
+
             aspX = $(this).width();
             aspY = $(this).height();
             file_display_area = $(this);
-            $('#fileInput').click();
+
+            input.trigger('click');
         });
 
-        $(document).ready(function () {
-            //capture selected filename
-            $('#fileInput').change(function (click) {
-                imageUpload($('#preview').get(0));
-                // Reset input value
-                $(this).val("");
-            });
-
-            //ok listener
-            $('.ok').click(function () {
-                preview();
-                $('#preview').delay(100).hide();
-                $('#modal').hide();
-                jcrop_api.destroy();
-                reset();
-            });
-
-            //cancel listener
-            $('.cancel').click(function (event) {
-                $('#preview').delay(100).hide();
-                $('#modal').hide();
-                jcrop_api.destroy();
-                reset();
-            });
+        $('body').on('change', selector+' input[type=file]', function (e) {
+            imageUpload($('#preview').get(0), $(this));
         });
+
+        $('.ok').click(function () {
+            preview();
+            $('#preview').delay(100).hide();
+            $('#modal').hide();
+            jcrop_api.destroy();
+            reset();
+        });
+
+        //cancel listener
+        $('.cancel').click(function (event) {
+            $('#preview').delay(100).hide();
+            $('#modal').hide();
+            jcrop_api.destroy();
+            reset();
+        });
+
 
         function reset() {
             scaled_width = 0;
@@ -76,8 +86,8 @@
             file_display_area = null;
         }
 
-        function imageUpload(dropbox) {
-            var file = $("#fileInput").get(0).files[0];
+        function imageUpload(dropbox, input) {
+            var file = input.get(0).files[0];
 
             var imageType = /image.*/;
 
@@ -210,7 +220,7 @@
             // Append it to the body element
             $('#preview').delay(100).hide();
             $('#modal').hide();
-            file_display_area.html('');
+            file_display_area.children('img').remove();
             file_display_area.append(imageFoo);
 
             if (onComplete) onComplete(
