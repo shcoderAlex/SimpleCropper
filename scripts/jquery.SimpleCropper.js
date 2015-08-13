@@ -223,12 +223,18 @@
             file_display_area.children('img').remove();
             file_display_area.append(imageFoo);
 
-            if (onComplete) onComplete(
-                {                    
-                    "original": { "filename": image_filename, "base64": original_data, "width": current_image.width, "height": current_image.height },
-                    "crop": { "x": (x1 * kw), "y": (y1 * kh), "width": (sw * kw), "height": (sh * kh) }
-                }
-               );
+            if (onComplete){
+                onComplete({                    
+                "original": {
+                    "filename": image_filename, 
+                    "width": current_image.width, 
+                    "height": current_image.height 
+                },
+                  "crop": {
+                    "x": (x1 * kw), "y": (y1 * kh), "width": (sw * kw), "height": (sh * kh) 
+                  }
+                }, $(this));
+            }
         }
 
         $(window).resize(function () {
