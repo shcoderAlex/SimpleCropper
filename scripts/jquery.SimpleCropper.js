@@ -6,7 +6,7 @@
 
 (function ($) {
 
-    $.fn.simpleCropper = function (onComplete) {
+    $.fn.simpleCropper = function (onComplete, notComplete) {
 
         var image_dimension_x = 600;
         var image_dimension_y = 600;
@@ -37,9 +37,9 @@
 
         $('body').on('click', selector, function (e) {
             item = $(this);
-            var chld = $(selector).children(':not(img)');
+            var input = $(this).children('input[type=file]');
 
-            chld.on('click', function (e) {
+            input.on('click', function (e) {
                 e.stopPropagation(); 
             });
 
@@ -175,7 +175,7 @@
 
                 reader.readAsDataURL(file);
             } else {
-                dropbox.innerHTML = "File not supported!";
+                notComplete("File not supported!");
             }
         }
 
