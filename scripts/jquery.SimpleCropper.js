@@ -33,13 +33,18 @@
         if(!$('#modal').length && !$('#myCanvas').length){
             $('body').append(modal);
             $('body').append(canvas);
+
+            $(this).children(':not(img)').on('click', function (e) {
+                e.stopPropagation(); 
+            });
         }
+
 
         $('body').on('click', selector, function (e) {
             item = $(this);
-            var input = $(this).children('input[type=file]');
+            var el = item.children(':not(img)');
 
-            input.on('click', function (e) {
+            el.on('click', function (e) {
                 e.stopPropagation(); 
             });
 
@@ -47,7 +52,7 @@
             aspY = $(this).height();
             file_display_area = $(this);
 
-            input.trigger('click');
+            item.children('input[type=file]').trigger('click');
         });
 
         $('body').on('change', selector+' input[type=file]', function (e) {
