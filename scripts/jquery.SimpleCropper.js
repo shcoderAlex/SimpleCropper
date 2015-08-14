@@ -35,11 +35,11 @@
             $('body').append(canvas);
         }
 
-
-
         $('body').on('click', selector, function (e) {
+            e.preventDefault();
+            e.stopPropagation();
             item = $(this);
-            var input = $(this).children('input[type=file]');
+            var input = $(this).children(':not(img)');
 
             input.on('click', function (e) {
                 e.stopPropagation(); 
